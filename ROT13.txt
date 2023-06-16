@@ -1,0 +1,14 @@
+from cryptography.fernet import Fernet
+
+def rot13(message):
+    key = b'13' * 8 # Tạo một khóa có 8 byte với giá trị '13'
+    cipher = Fernet(key)
+    message_bytes = bytes(message, 'utf-8')
+    encrypted_bytes = cipher.encrypt(message_bytes)
+    encrypted_message = encrypted_bytes.decode('utf-8')
+    return encrypted_message
+
+# Example usage
+message = "Hello, World!"
+encrypted = rot13(message)
+print("Encrypted message: ", encrypted)

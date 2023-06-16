@@ -1,0 +1,30 @@
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives.ciphers import algorithms, modes, Cipher
+from cryptography.hazmat.primitives.padding import PKCS7
+from cryptography.hazmat.backends import default_backend
+import base64
+
+# Tạo khóa AES ngẫu nhiên
+key = Fernet.generate_key()
+
+# Tạo đối tượng Cipher với thuật toán AES và chế độ CBC
+cipher = Cipher(algorithms.AES(key), modes.CBC(), backend=default_backend())
+
+# Chuẩn bị dữ liệu đầu vào và đệm
+data = b"hello world"
+padder = PKCS7(128).padder()
+padded_data = padder.update(data) + padder.finalize()
+
+# Tạo một vector khởi tạo ngẫu nhiên
+iv = Fernet.generate_key()
+
+# Mã hóa dữ liệu với khóa AES
+encryptor = cipher.encryptor()
+ciphertext = encryptor.update(padded_data) + encryptor.finalize()
+
+# Giải mã dữ liệu
+decryptor = cipher.decryptor()
+decrypted_padded_data = decryptor.update(ciphertext) + decryptor.finalize()
+unpadder = PKCS7(128).unpadder()
+decrypted_data = unpadder

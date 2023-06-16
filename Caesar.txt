@@ -1,0 +1,18 @@
+from cryptography.fernet import Fernet
+
+# Khóa
+key = Fernet.generate_key()
+
+# Tạo đối tượng Fernet từ khóa
+cipher = Fernet(key)
+
+# Chuỗi cần mã hóa
+message = b"Hello, World!"
+
+# Mã hóa
+encrypted = cipher.encrypt(message)
+print("Encrypted message: ", encrypted)
+
+# Giải mã
+decrypted = cipher.decrypt(encrypted)
+print("Decrypted message: ", decrypted)

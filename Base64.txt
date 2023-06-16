@@ -1,0 +1,25 @@
+from cryptography.fernet import Fernet
+import base64
+
+# Khóa
+key = Fernet.generate_key()
+
+# Tạo đối tượng Fernet từ khóa
+cipher = Fernet(key)
+
+# Chuỗi cần mã hóa
+message = b"Hello, World!"
+
+# Mã hóa
+encrypted = cipher.encrypt(message)
+
+# Mã hóa Base64
+encrypted_base64 = base64.b64encode(encrypted)
+print("Encrypted message (Base64): ", encrypted_base64)
+
+# Giải mã Base64
+decrypted_base64 = base64.b64decode(encrypted_base64)
+
+# Giải mã
+decrypted = cipher.decrypt(decrypted_base64)
+print("Decrypted message: ", decrypted)
